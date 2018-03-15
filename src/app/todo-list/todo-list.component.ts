@@ -14,10 +14,6 @@ export class TodoListComponent implements OnInit {
 
   todos: List<string> | null = null;
 
-  // constructor(private todoService: TodoService) { }
-
-  // constructor(private todoService: TodoService) { }
-
   constructor(@Inject(TodoStore) private todoStore: Store<TodoState>, private todoAppActionCreator: TodoAppActionCreator) { }
 
   ngOnInit(): void {
@@ -29,6 +25,5 @@ export class TodoListComponent implements OnInit {
     this.todoStore.subscribe(() => {
       this.todos = this.todoStore.getState().todos;
     });
-    // this.todoService.getTodos().subscribe(todos => this.todos = List.of(...todos));
   }
 }

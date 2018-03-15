@@ -16,12 +16,9 @@ export class TodoFormComponent {
 
   todoText: string = this.DEFAULT_TODO_TEXT;
 
-  // constructor(private todoService: TodoService) {}
-
   constructor(@Inject(TodoStore) private todoStore: Store<TodoState>, private todoAppActionCreator: TodoAppActionCreator) { }
 
   onSubmit() {
-    // this.todoService.addTodo(this.todoText);
     this.todoAppActionCreator.addTodo(this.todoText);
     this.todoText = this.DEFAULT_TODO_TEXT;
   }

@@ -4,6 +4,7 @@ import {Inject, Injectable} from '@angular/core';
 import {TodoState} from './state';
 import {TodoStore} from './store';
 import {Actions} from './consts';
+import {List} from 'immutable';
 
 @Injectable()
 export class TodoAppActionCreator {
@@ -18,7 +19,7 @@ export class TodoAppActionCreator {
                      .map(res => res as string[])
                      .subscribe(todos => parent.todoStore.dispatch({
                        type: Actions.LIST_TODOS,
-                       payload: todos}));
+                       extraProps: List.of(...todos)}));
   }
 
   addTodo(todo: string) {
@@ -27,11 +28,19 @@ export class TodoAppActionCreator {
       .subscribe(res => {
                   parent.todoStore.dispatch({
                    type: Actions.ADD_TODO,
-                   payload: todo});
+                   extraProps: todo});
                  },
                 (err: HttpErrorResponse) => {
                   console.log(err);
                 });
+  }
+
+  loadUser() {
+    const parent = this;
+    this.httpClient.get(TodoAppActionCreator.API_URL + 'user')
+      .subscribe(user => parent.todoStore.dispatch({
+            type: Actions.LOAD_USER,
+            extraProps: user}));
   }
 }
 
