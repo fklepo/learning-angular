@@ -12,6 +12,8 @@ import {FormsModule} from '@angular/forms';
 import {TodoService} from './todo.service';
 import {MockApiService} from './mock-api.service';
 import {MockHttpInterceptor} from './mock-http-interceptor';
+import {TodoAppActionCreator} from './redux/action-creator';
+import {todoStoreProviders} from './redux/store';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import {MockHttpInterceptor} from './mock-http-interceptor';
                 provide: HTTP_INTERCEPTORS,
                 useClass: MockHttpInterceptor,
                 multi: true
-              }],
+              },
+              TodoAppActionCreator,
+              todoStoreProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

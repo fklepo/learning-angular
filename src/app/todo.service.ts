@@ -19,7 +19,7 @@ export class TodoService {
   }
 
   addTodo(todo: string) {
-    console.log('adding new todo: ' + todo);
-    this.httpClient.post(TodoService.API_URL + 'todo', todo).subscribe(value => {console.log(value + ' '); }, error2 => {console.log(error2); });
+    this.httpClient.post(TodoService.API_URL + 'todo', todo)
+                    .subscribe(value => {console.log(value + ' '); }, error2 => {console.log(error2); });
   }
 }

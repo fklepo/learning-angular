@@ -1,26 +1,15 @@
-import {ListenerCallback, UnsubsribeCallback} from './listener';
+import {TodoState} from './state';
+import {Store, createStore} from 'redux';
+import {todoReducer} from './reducers';
+import {InjectionToken} from '@angular/core';
 
-export class Store<T> {
-  private _state: T;
-  private _listeners: ListenerCallback[] = [];
-
-  constructor(private reducer: any, initialState: T) {
-    this._state = initialState;
-  }
-
-  state(): T {
-    return this._state;
-  }
-
-  dispatch(action: any) {
-    this._state = this.reducer(this._state, action);
-    this._listeners.forEach(listener => listener());
-  }
-
-  subscribe(listener: ListenerCallback): UnsubsribeCallback {
-    this._listeners.push(listener);
-    return () => {
-      this._listeners = this._listeners.filter(l => l !== listener);
-    };
-  }
+export function createTodoStore(): Store<TodoState> {
+  return createStore<TodoState>(todoReducer);
 }
+
+export const TodoStore = new InjectionToken('Todo.store');
+
+export const todoStoreProviders = [
+  {provide: TodoStore, useFactort: createTodoStore }
+];
+
