@@ -14,20 +14,32 @@ import {MockApiService} from './mock-api.service';
 import {MockHttpInterceptor} from './mock-http-interceptor';
 import {TodoAppActionCreator} from './redux/action-creator';
 import {todoStoreProviders} from './redux/store';
+import {RouterModule, Routes} from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+const appRoutes: Routes = [
+  { path: 'todo/list', component: TodoListComponent },
+  { path: 'todo/new', component: TodoFormComponent },
+  { path: 'todo/:id', component: TodoComponent },
+  { path: '', redirectTo: '/todo/list', pathMatch: 'full'},
+  { path: '**', component: PageNotFoundComponent}
+];
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule,
+    FormsModule,
+    RouterModule.forRoot(appRoutes)
+  ],
   declarations: [
     AppComponent,
     TodoComponent,
     TodoListComponent,
     TodoFormComponent,
-    TodoCurrentUserComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule,
-    FormsModule
+    TodoCurrentUserComponent,
+    PageNotFoundComponent
   ],
   providers: [TodoService,
               MockApiService,

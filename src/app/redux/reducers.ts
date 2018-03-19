@@ -2,10 +2,12 @@ import {TodoState} from './state';
 import {AnyAction, Reducer} from 'redux';
 import {List} from 'immutable';
 import {Actions} from './consts';
+import {Todo} from '../todo-interface';
+import {TODOS} from '../mock-data';
 
 const initialState: TodoState = {
   user: 'Filip',
-  todos: List.of()
+  todos: List.of(...TODOS)
 };
 
 export const todoReducer: Reducer<TodoState> =

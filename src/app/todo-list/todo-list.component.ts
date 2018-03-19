@@ -4,6 +4,7 @@ import {TodoStore} from '../redux/store';
 import {Store} from 'redux';
 import {TodoState} from '../redux/state';
 import {List} from 'immutable';
+import {Todo} from '../todo-interface';
 
 @Component({
   selector: 'app-todo-list',
@@ -12,7 +13,7 @@ import {List} from 'immutable';
 })
 export class TodoListComponent implements OnInit {
 
-  todos: List<string> | null = null;
+  todos: List<Todo> | null = null;
 
   constructor(@Inject(TodoStore) private todoStore: Store<TodoState>, private todoAppActionCreator: TodoAppActionCreator) { }
 

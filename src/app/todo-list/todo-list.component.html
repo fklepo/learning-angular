@@ -1,4 +1,4 @@
 <h3>Lista TODOova</h3>
 <ul>
-  <li *ngFor="let todo of todos"><app-todo [todo]="todo"></app-todo></li>
+  <li *ngFor="let todo of todos"><a [routerLink]="['/todo', todo.id]">{{ todo.value }}</a></li>
 </ul>

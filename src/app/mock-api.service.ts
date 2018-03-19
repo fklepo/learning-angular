@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import {TODOS} from './mock-data';
+import {Todo} from './todo-interface';
 
 @Injectable()
 export class MockApiService {
 
-  constructor() { }
+  constructor() { console.log('mockapi service created!'); }
 
   private user = 'filip';
 
@@ -14,11 +15,13 @@ export class MockApiService {
     return this.user;
   }
 
-  getTodos(): string[] {
+  getTodos(): Todo[] {
     return this.todos;
   }
 
-  addTodo(todo: string) {
-    this.todos.push(todo);
+  addTodo(todo: Todo): Todo {
+    const newTodo: Todo = {id: this.todos.length + 1, value: todo.value};
+    this.todos.push(newTodo);
+    return newTodo;
   }
 }

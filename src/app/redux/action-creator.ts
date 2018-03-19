@@ -1,10 +1,11 @@
-import {Action, ActionCreator, Store} from 'redux';
+import {Store} from 'redux';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {TodoState} from './state';
 import {TodoStore} from './store';
 import {Actions} from './consts';
 import {List} from 'immutable';
+import {Todo} from '../todo-interface';
 
 @Injectable()
 export class TodoAppActionCreator {
@@ -16,7 +17,7 @@ export class TodoAppActionCreator {
   listTodos() {
       const parent = this;
       this.httpClient.get(TodoAppActionCreator.API_URL + 'todo')
-                     .map(res => res as string[])
+                     .map(res => res as Todo[])
                      .subscribe(todos => parent.todoStore.dispatch({
                        type: Actions.LIST_TODOS,
                        extraProps: List.of(...todos)}));
@@ -24,11 +25,12 @@ export class TodoAppActionCreator {
 
   addTodo(todo: string) {
     const parent = this;
-    this.httpClient.post(TodoAppActionCreator.API_URL + 'todo', todo)
+    console.log('adding new todo ', todo);
+    this.httpClient.post(TodoAppActionCreator.API_URL + 'todo', {value: todo})
       .subscribe(res => {
                   parent.todoStore.dispatch({
                    type: Actions.ADD_TODO,
-                   extraProps: todo});
+                   extraProps: res});
                  },
                 (err: HttpErrorResponse) => {
                   console.log(err);
@@ -43,4 +45,3 @@ export class TodoAppActionCreator {
             extraProps: user}));
   }
 }
-
